@@ -1,0 +1,73 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-align: center;
+
+}
+h1{
+    background-color:#cdb4db ;
+    color: #000;
+    height: 5rem;
+    line-height: 5rem;
+    font-family: 'Courier New', Courier, monospace;
+}
+body{
+    background-color: #a2d2ff;
+    font-family: Arial, sans-serif;
+}
+.choice {
+    display: inline-block;
+    margin: 1rem;
+    cursor: pointer;
+    margin-top: 5rem;
+    border-radius: 50%;
+    display: flex;
+    
+    justify-content: center;
+    align-items: center;
+}
+.choice img {
+    width: 200px;
+    height: 200px;
+}
+.choice:hover {
+    transform: scale(1.1);
+    
+    background-color:#ffc8dd ;
+}
+#choices {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.scoreboard {
+    margin-top: 2rem;
+    font-size: 1.5rem;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.score-value {
+    font-weight: bold;
+    color: #000;
+    font-size: 2rem;
+    border: #32373b 2px solid;
+}
+
+.msg-container {
+    margin-top: 2rem;
+    font-size: 2.5rem;
+    color: #000;
+    font-weight: bold;
+    background-color: #ffafcc;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
