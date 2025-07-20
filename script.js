@@ -5,16 +5,20 @@ let roundCount = 0;
 let playerScoreDisplay = document.querySelector('#player-score');
 let computerScoreDisplay = document.querySelector('#computer-score');
 let msgDisplay = document.querySelector('.result-message');
-
+let resetbtn = document.querySelector('#reset-btn');
+let newgamebtn = document.querySelector('#new-game-btn');
 const choices = document.querySelectorAll('.choice');
-
+newgamebtn.style.opacity = 0;
+resetbtn.style.opacity = 0;
 choices.forEach(choice => {
     choice.addEventListener('click', () => {
+        resetbtn.style.opacity = 1;
+        
         let playerChoice = choice.id; 
         console.log(`Player chose: ${playerChoice}`);
         let computerSelection = computerChoice();
         console.log(`Computer chose: ${computerSelection}`);
-
+         
         if (playerChoice === computerSelection) {
             console.log("It's a tie!");
             roundCount++;
@@ -41,35 +45,48 @@ choices.forEach(choice => {
         console.log(`You lose! ${computerSelection} beats ${playerChoice}`);
     }
        roundCount++;
-       endGame();
+      
+
+            endGame();
+            // Show the new game button
+            
+        
 
     });
 });
 
 function endGame() {
-    if (roundCount === 5) {
-        if (playerScore > computerScore) {
-            msgDisplay.textContent = "Congratulations! You won the game!";
-        } else if (playerScore < computerScore) {
-            msgDisplay.textContent = "Sorry! You lost the game.";
-        } else {
-            msgDisplay.textContent = "It's a tie game!";
-        }
-    
-        disableButtons();
-    
-        function disableButtons() {
-            choices.forEach(choice => {
-                choice.disabled = true;
-                choice.ariaDisabled = true;
-            });
-        }
-     
+    if (roundCount < 5) return; // Exit early if game isn't over
+
+    if (playerScore > computerScore) {
+        msgDisplay.textContent = "Congratulations! You won the game!";
+    } else if (playerScore < computerScore) {
+        msgDisplay.textContent = "Sorry! You lost the game.";
+    } else {
+        msgDisplay.textContent = "It's a tie game!";
+    }
+
+    disableButtons();
     console.log(`Game Over! Final Score - Player: ${playerScore}, Computer: ${computerScore}`);
-};
-
-
+    newgamebtn.style.opacity = 1;
+    resetbtn.style.opacity = 0;
 }
+
+function disableButtons() {
+    choices.forEach(choice => {
+        choice.disabled = true;
+        choice.setAttribute('aria-disabled', 'true'); // Use string for ARIA
+        choice.classList.add('disabled'); // Add class for styling
+        computerScoreDisplay.textContent = " "; 
+        playerScoreDisplay.textContent = " ";
+        msgDisplay.textContent = "Game Over! Click to restart.";
+
+    });
+}
+      
+
+
+
 
 function computerChoice() {
     const options = ['rock', 'paper', 'scissors'];
@@ -97,3 +114,40 @@ function gameplay (playerSelection, computerSelection) {
         return `You lose! ${computerSelection} beats ${playerSelection}`;
     }
 }
+
+function resetGame() {
+    playerScore = 0;
+    computerScore = 0;
+    roundCount = 0;
+    playerScoreDisplay.textContent = playerScore;
+    computerScoreDisplay.textContent = computerScore;
+    msgDisplay.textContent = "Game reset! Start a new game.";
+    newgamebtn.style.opacity = 0;
+    resetbtn.style.opacity = 0;
+    
+    choices.forEach(choice => {
+        choice.disabled = false;
+        choice.removeAttribute('aria-disabled');
+        choice.classList.remove('disabled');
+    });
+}
+resetbtn.addEventListener('click', resetGame);
+
+function newGame() {
+    playerScore = 0;
+    computerScore = 0;
+    roundCount = 0;
+    playerScoreDisplay.textContent = playerScore;
+    computerScoreDisplay.textContent = computerScore;
+    msgDisplay.textContent = "New game started! Make your choice.";
+    newgamebtn.style.opacity = 0;
+    resetbtn.style.opacity = 1;
+    
+    choices.forEach(choice => {
+        choice.disabled = false;
+        choice.removeAttribute('aria-disabled');
+        choice.classList.remove('disabled');
+    });
+}
+
+newgamebtn.addEventListener('click', newGame);
